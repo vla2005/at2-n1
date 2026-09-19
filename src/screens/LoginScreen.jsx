@@ -21,10 +21,10 @@ export function LoginScreen({ navigation }) {
       <LinearGradient
         pointerEvents="none"
         colors={[
-          'rgba(14, 22, 71, 0)',
-          'rgba(14, 22, 71, 0.55)',
-          'rgba(14, 22, 71, 0.92)',
-          '#0E1647',
+          'rgba(10, 16, 51, 0)',
+          'rgba(10, 16, 51, 0.55)',
+          'rgba(10, 16, 51, 0.92)',
+          '#0A1033',
         ]}
         locations={[0, 0.32, 0.72, 1]}
         style={styles.imageFade}
@@ -61,7 +61,7 @@ export function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#0E1647',
+    backgroundColor: '#0A1033',
   },
   background: {
     width: '100%',
