@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable, Image, FlatList } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, FlatList, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -65,10 +65,14 @@ export function HomeScreen() {
                     </Pressable>
                 </View>
 
-                <View style={styles.cardsSection}>
+                <ScrollView 
+                    horizontal 
+                    showsHorizontalScrollIndicator={false}
+                    style={styles.cardsScrollView}
+                    contentContainerStyle={styles.cardsSection}
+                >
                     <View style={styles.card}>
                         <Image source={require('../../assets/ranked-icon.png')} style={styles.filterIcons} />
-                        {/* coloquei ranked pq ranquada tava quebrando linha */}
                         <Text style={styles.cardText}>Ranked</Text>
                     </View>
                     <View style={styles.card}>
@@ -79,42 +83,43 @@ export function HomeScreen() {
                         <Image source={require('../../assets/fun-icon.png')} style={styles.filterIcons} />
                         <Text style={styles.cardText}>Diversão</Text>
                     </View>
+                    {/* O card falso no final da lista rolável */}
                     <View style={styles.fakeCard}></View>
-                </View>
+                </ScrollView>
 
                 <View style={styles.listHeader}>
                     <Text style={styles.listHeaderText}>Partidas agendadas</Text>
                     <Text style={styles.listHeaderCount}>Total: {matches.length}</Text>
                 </View>
 
-                <View style={styles.list}>
-                    <FlatList
-                        data={matches}
-                        keyExtractor={(item) => item.id}
-                        ItemSeparatorComponent={() => <View style={styles.listDivider} />}
-                        renderItem={({item}) => (
-                            <View style={styles.listItem}>
-                                <View style={styles.itemImage}>
-                                    <Image source={item.image} style={styles.imageInside} />
-                                </View>
-                                <View style={{ flex: 1 }}>
-                                    <Text style={styles.itemTitleText}>{item.title}</Text>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                        <FontAwesome name="calendar-o" size={18} color="#E51C44" />
-                                        <Text style={styles.itemDateText}>{item.date}</Text>
-                                    </View>
-                                </View>
-                                <View style={{ alignItems: 'flex-end' }}>
-                                    <Text style={styles.itemTypeText}>{item.type}</Text>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                        <FontAwesome name="user" size={18} color={item.role === 'Anfitrião' ? '#E51C44' : '#32BD50'} />
-                                        <Text style={[styles.itemRoleText, { color: item.role === 'Anfitrião' ? '#E51C44' : '#32BD50' }]}>{item.role}</Text>
-                                    </View>
+                <FlatList
+                    style={styles.list}
+                    contentContainerStyle={{ paddingBottom: 40 }}
+                    data={matches}
+                    keyExtractor={(item) => item.id}
+                    ItemSeparatorComponent={() => <View style={styles.listDivider} />}
+                    renderItem={({item}) => (
+                        <View style={styles.listItem}>
+                            <View style={styles.itemImage}>
+                                <Image source={item.image} style={styles.imageInside} />
+                            </View>
+                            <View style={{ flex: 1 }}>
+                                <Text style={styles.itemTitleText}>{item.title}</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                    <FontAwesome name="calendar-o" size={18} color="#E51C44" />
+                                    <Text style={styles.itemDateText}>{item.date}</Text>
                                 </View>
                             </View>
-                        )}
-                    />
-                </View>
+                            <View style={{ alignItems: 'flex-end' }}>
+                                <Text style={styles.itemTypeText}>{item.type}</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                    <FontAwesome name="user" size={18} color={item.role === 'Anfitrião' ? '#E51C44' : '#32BD50'} />
+                                    <Text style={[styles.itemRoleText, { color: item.role === 'Anfitrião' ? '#E51C44' : '#32BD50' }]}>{item.role}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    )}
+                />
             </View>
         </SafeAreaView>
     )
@@ -126,9 +131,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#0A1033',
     },
     container: {
+        flex: 1, // Isso é ESSENCIAL para a lista saber onde a tela termina e habilitar a rolagem!
         marginLeft: 24,
         marginTop: 10,
         marginRight: 24,
+    },
+    list: {
+        flex: 1, // Faz a área da lista ocupar todo o espaço restante até o final da tela
     },
     header: {
         flexDirection: 'row',
@@ -143,10 +152,9 @@ const styles = StyleSheet.create({
     avatar: {
         width: 46,
         height: 46,
-        // borderRadius: 8,
     },
     headerTextContainer: {
-        marginLeft: 5,
+        flex: 1,
         marginTop: -15
     },
     saudationText: {
@@ -164,26 +172,30 @@ const styles = StyleSheet.create({
         color: '#ABB1CC',
         fontSize: 13,
         marginLeft: 24,
-        marginTop: 5
     },
     addButton: {
         backgroundColor: '#E51C44',
         width: 48,
         height: 48,
         borderRadius: 8,
-        marginLeft: 120,
     },
     addButtonText: {
         color: '#DDE3F0',
         fontSize: 24,
         fontWeight: '700',
         textAlign: 'center',
-        marginTop: 7,
+        marginTop: 6,
     },
-    cardsSection: {
+    cardsScrollView: {
         marginTop: 42,
+        marginHorizontal: -24,
+        // Limitar a altura máxima garante que o ScrollView não cresça descontroladamente no Android
+        maxHeight: 125, 
+    },
+    
+    cardsSection: {
         flexDirection: 'row',
-        marginRight: -24, 
+        paddingHorizontal: 24, // Alinha os cards com o resto do app
         gap: 16
     },
 
@@ -192,7 +204,7 @@ const styles = StyleSheet.create({
         height: 120,
         backgroundColor: '#171F52',
         borderRadius: 8,
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: '#1D2766',
         justifyContent: 'space-between',
         padding: 15,
@@ -223,8 +235,8 @@ const styles = StyleSheet.create({
     listHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 80,
-        marginBottom: 40,
+        marginTop: 32, // Estava 80, reduzi para ficar mais próximo
+        marginBottom: 16, // Estava 40, reduzi também
     },
 
     listHeaderText: {
