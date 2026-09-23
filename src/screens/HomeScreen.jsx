@@ -46,7 +46,7 @@ const matches = [
     },
 ];
 
-export function HomeScreen() {
+export function HomeScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -60,7 +60,12 @@ export function HomeScreen() {
                         </Text>
                         <Text style={styles.motivationText}>Hoje é dia de vitória</Text>
                     </View>
-                    <Pressable style={styles.addButton}>
+                    <Pressable
+                        accessibilityRole="button"
+                        accessibilityLabel="Agendar partida"
+                        onPress={() => navigation.navigate('Agendar')}
+                        style={styles.addButton}
+                    >
                         <Text style={styles.addButtonText}>+</Text>
                     </Pressable>
                 </View>
@@ -131,7 +136,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0A1033',
     },
     container: {
-        flex: 1, // Isso é ESSENCIAL para a lista saber onde a tela termina e habilitar a rolagem!
+        flex: 1,
         marginLeft: 24,
         marginTop: 10,
         marginRight: 24,
