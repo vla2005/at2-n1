@@ -104,7 +104,7 @@ export function HomeScreen({ navigation }) {
                     keyExtractor={(item) => item.id}
                     ItemSeparatorComponent={() => <View style={styles.listDivider} />}
                     renderItem={({item}) => (
-                        <View style={styles.listItem}>
+                        <Pressable style={styles.listItem} onPress={() => navigation.navigate('Detalhes')}>
                             <View style={styles.itemImage}>
                                 <Image source={item.image} style={styles.imageInside} />
                             </View>
@@ -122,7 +122,7 @@ export function HomeScreen({ navigation }) {
                                     <Text style={[styles.itemRoleText, { color: item.role === 'Anfitrião' ? '#E51C44' : '#32BD50' }]}>{item.role}</Text>
                                 </View>
                             </View>
-                        </View>
+                        </Pressable>
                     )}
                 />
             </View>

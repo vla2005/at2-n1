@@ -7,6 +7,7 @@ import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import { Rajdhani_500Medium, Rajdhani_700Bold } from '@expo-google-fonts/rajdhani';
 
 import { AgendarScreen } from './src/screens/AgendarScreen';
+import { DetalhesScreen } from './src/screens/DetalhesScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { LoginScreen } from './src/screens/LoginScreen';
 
@@ -39,6 +40,7 @@ export default function App() {
             component={AgendarScreen}
             options={{ gestureEnabled: false }}
           />
+          <Stack.Screen name="Detalhes" component={DetalhesScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
