@@ -68,26 +68,31 @@ export function DetalhesScreen({ navigation }) {
 
       <View style={styles.content}>
         <ImageBackground
-          source={require('../../assets/lendarios.png')}
           style={styles.banner}
+          imageStyle={styles.bannerImage}
           resizeMode="cover"
+          source={require('../../assets/lendarios.png')}
         >
           <LinearGradient
             colors={[
-              'rgba(10, 16, 51, 0.7)',
-              'rgba(10, 16, 51, 0.15)',
-              'rgba(10, 16, 51, 0.65)',
+              'rgba(18, 29, 51, 0)',
+              'rgba(18, 29, 51, 0.6111)',
+              'rgba(18, 29, 51, 0.8281)',
+              '#121D33',
             ]}
-            locations={[0, 0.35, 1]}
+            locations={[0, 0.55, 0.82, 1]}
+            start={{ x: 0.5, y: 0 }}
+            end={{ x: 0.5, y: 1 }}
             style={styles.bannerGradient}
-          />
-          <View style={styles.bannerInfo}>
-            <Text style={styles.bannerTitle}>Lendários</Text>
-            <Text style={styles.bannerSubtitle}>
-              É hoje que vamos chegar ao challenger sem{'\n'}
-              perder uma partida da md10
-            </Text>
-          </View>
+          >
+            <View style={styles.bannerInfo}>
+              <Text style={styles.bannerTitle}>Lendários</Text>
+              <Text style={styles.bannerSubtitle}>
+                É hoje que vamos chegar ao challenger sem{'\n'}
+                perder uma partida da md10
+              </Text>
+            </View>
+          </LinearGradient>
         </ImageBackground>
 
         <View style={styles.membersSectionHeader}>
@@ -197,16 +202,19 @@ const styles = StyleSheet.create({
   banner: {
     width: '100%',
     height: 234,
-    justifyContent: 'flex-end',
     overflow: 'hidden',
   },
+  bannerImage: {
+    width: '100%',
+    height: '100%',
+  },
   bannerGradient: {
-    ...StyleSheet.absoluteFillObject,
+    flex: 1,
+    justifyContent: 'flex-end',
   },
   bannerInfo: {
     paddingHorizontal: 24,
     paddingBottom: 24,
-    zIndex: 1,
   },
   bannerTitle: {
     color: '#FFFFFF',
